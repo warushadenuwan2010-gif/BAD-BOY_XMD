@@ -78,7 +78,7 @@ async function connectToWA() {
     generateHighQualityLinkPreview: true,
   });
 
-  danuwa.ev.on('connection.update', async (update) => {
+  bad_boy.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect } = update;
     if (connection === 'close') {
       if (lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut) {
@@ -101,12 +101,12 @@ async function connectToWA() {
     }
   });
 
-  danuwa.ev.on('creds.update', saveCreds);
+  bad_boy.ev.on('creds.update', saveCreds);
 
-  danuwa.ev.on('messages.upsert', async ({ messages }) => {
+  bad_boy.ev.on('messages.upsert', async ({ messages }) => {
     for (const msg of messages) {
       if (msg.messageStubType === 68) {
-        await danuwa.sendMessageAck(msg.key);
+        await bad_boy.sendMessageAck(msg.key);
       }
     }
 
@@ -128,7 +128,7 @@ async function connectToWA() {
     const sender = mek.key.fromMe ? bad_boy.user.id : (mek.key.participant || mek.key.remoteJid);
     const senderNumber = sender.split('@')[0];
     const isGroup = from.endsWith('@g.us');
-    const botNumber = danuwa.user.id.split(':')[0];
+    const botNumber = bad_boy.user.id.split(':')[0];
     const pushname = mek.pushName || 'Sin Nombre';
     const isMe = botNumber.includes(senderNumber);
     const isOwner = ownerNumber.includes(senderNumber) || isMe;
