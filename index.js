@@ -89,7 +89,7 @@ async function connectToWA() {
 
       const up = `BAD_BOY-MD connected ✅\n\nPREFIX: ${prefix}`;
       await bad_boy.sendMessage(ownerNumber[0] + "@s.whatsapp.net", {
-        image: { url: `https://github.com/BAD_BOY-MD/BAD_BOY-MD/blob/main/images/BAD_BOY-MD.png?raw=true` },
+        image: { url: `https://raw.githubusercontent.com/warushadenuwan2010-gif/BAD-BOY_XMD/refs/heads/main/image/IMG-20251031-WA0201.jpg` },
         caption: up
       });
 
@@ -141,7 +141,7 @@ async function connectToWA() {
     const isBotAdmins = isGroup ? groupAdmins.includes(botNumber2) : false;
     const isAdmins = isGroup ? groupAdmins.includes(sender) : false;
 
-    const reply = (text) => danuwa.sendMessage(from, { text }, { quoted: mek });
+    const reply = (text) => bad_boy.sendMessage(from, { text }, { quoted: mek });
 
     if (isCmd) {
       const cmd = commands.find((c) => c.pattern === commandName || (c.alias && c.alias.includes(commandName)));
@@ -164,7 +164,7 @@ async function connectToWA() {
     for (const handler of replyHandlers) {
       if (handler.filter(replyText, { sender, message: mek })) {
         try {
-          await handler.function(danuwa, mek, m, {
+          await handler.function(bad_boy, mek, m, {
             from, quoted: mek, body: replyText, sender, reply,
           });
           break;
