@@ -27,7 +27,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const prefix = '.';
-const ownerNumber = ['94776121326'];
+const ownerNumber = ['94774756599'];
 const credsPath = path.join(__dirname, '/auth_info_baileys/creds.json');
 
 async function ensureSessionFile() {
@@ -63,11 +63,11 @@ async function ensureSessionFile() {
 }
 
 async function connectToWA() {
-  console.log("Connecting DANUWA-MD 🧬...");
+  console.log("Connecting BAD_BOY-MD 🧬...");
   const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, '/auth_info_baileys/'));
   const { version } = await fetchLatestBaileysVersion();
 
-  const danuwa = makeWASocket({
+  const bad_boy = makeWASocket({
     logger: P({ level: 'silent' }),
     printQRInTerminal: false,
     browser: Browsers.macOS("Firefox"),
@@ -85,11 +85,11 @@ async function connectToWA() {
         connectToWA();
       }
     } else if (connection === 'open') {
-      console.log('✅ DANUWA-MD connected to WhatsApp');
+      console.log('✅ BAD_BOY-MD connected to WhatsApp');
 
-      const up = `DANUWA-MD connected ✅\n\nPREFIX: ${prefix}`;
-      await danuwa.sendMessage(ownerNumber[0] + "@s.whatsapp.net", {
-        image: { url: `https://github.com/DANUWA-MD/DANUWA-MD/blob/main/images/DANUWA-MD.png?raw=true` },
+      const up = `BAD_BOY-MD connected ✅\n\nPREFIX: ${prefix}`;
+      await bad_boy.sendMessage(ownerNumber[0] + "@s.whatsapp.net", {
+        image: { url: `https://github.com/BAD_BOY-MD/BAD_BOY-MD/blob/main/images/BAD_BOY-MD.png?raw=true` },
         caption: up
       });
 
@@ -116,7 +116,7 @@ async function connectToWA() {
     mek.message = getContentType(mek.message) === 'ephemeralMessage' ? mek.message.ephemeralMessage.message : mek.message;
     if (mek.key.remoteJid === 'status@broadcast') return;
 
-    const m = sms(danuwa, mek);
+    const m = sms(bad_boy, mek);
     const type = getContentType(mek.message);
     const from = mek.key.remoteJid;
     const body = type === 'conversation' ? mek.message.conversation : mek.message[type]?.text || mek.message[type]?.caption || '';
@@ -125,16 +125,16 @@ async function connectToWA() {
     const args = body.trim().split(/ +/).slice(1);
     const q = args.join(' ');
 
-    const sender = mek.key.fromMe ? danuwa.user.id : (mek.key.participant || mek.key.remoteJid);
+    const sender = mek.key.fromMe ? bad_boy.user.id : (mek.key.participant || mek.key.remoteJid);
     const senderNumber = sender.split('@')[0];
     const isGroup = from.endsWith('@g.us');
     const botNumber = danuwa.user.id.split(':')[0];
     const pushname = mek.pushName || 'Sin Nombre';
     const isMe = botNumber.includes(senderNumber);
     const isOwner = ownerNumber.includes(senderNumber) || isMe;
-    const botNumber2 = await jidNormalizedUser(danuwa.user.id);
+    const botNumber2 = await jidNormalizedUser(bad_boy.user.id);
 
-    const groupMetadata = isGroup ? await danuwa.groupMetadata(from).catch(() => {}) : '';
+    const groupMetadata = isGroup ? await bad_boy.groupMetadata(from).catch(() => {}) : '';
     const groupName = isGroup ? groupMetadata.subject : '';
     const participants = isGroup ? groupMetadata.participants : '';
     const groupAdmins = isGroup ? await getGroupAdmins(participants) : '';
@@ -146,9 +146,9 @@ async function connectToWA() {
     if (isCmd) {
       const cmd = commands.find((c) => c.pattern === commandName || (c.alias && c.alias.includes(commandName)));
       if (cmd) {
-        if (cmd.react) danuwa.sendMessage(from, { react: { text: cmd.react, key: mek.key } });
+        if (cmd.react) bad_boy.sendMessage(from, { react: { text: cmd.react, key: mek.key } });
         try {
-          cmd.function(danuwa, mek, m, {
+          cmd.function(bad_boy, mek, m, {
             from, quoted: mek, body, isCmd, command: commandName, args, q,
             isGroup, sender, senderNumber, botNumber2, botNumber, pushname,
             isMe, isOwner, groupMetadata, groupName, participants, groupAdmins,
@@ -179,7 +179,7 @@ async function connectToWA() {
 ensureSessionFile();
 
 app.get("/", (req, res) => {
-  res.send("Hey, DANUWA-MD started✅");
+  res.send("Hey, BAD_BOY-MD started✅");
 });
 
 app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));
