@@ -4,12 +4,12 @@
   "description": "A Powerfull Whatsapp Bot",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name DANUWA-MD",
+    "start": "pm2 start index.js --deep-monitoring --attach --name BAD_BOY-MD",
     "stop": "pm2 stop BAD_BOY-MD",
     "restart": "pm2 restart BAD_BOY-MD"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.16",
+    "@whiskeysockets/baileys": "^7.0.0",
     "api-dylux": "^1.8.5",
     "axios": "^1.9.0",
     "browser-id3-writer": "^6.2.0",
