@@ -14,7 +14,7 @@ async (danuwa, mek, m, {
     groupAdmins, isBotAdmins, isAdmins, reply
 }) => {
     try {
-        return await danuwa.sendMessage(from, {
+        return await bad_boy.sendMessage(from, {
             image: { url: config.ALIVE_IMG },
             caption: config.ALIVE_MSG
         }, { quoted: mek });
